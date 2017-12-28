@@ -9,7 +9,6 @@
 #include <unordered_map>
 #include <string>
 
-#include "deleters.hpp"
 
 class Texture;
 
@@ -25,7 +24,7 @@ struct Transform
 //SDL helper structs
 struct Window
 {
-    std::unique_ptr<SDL_Window, Deleters> window;
+    // std::unique_ptr<SDL_Window, Deleters> window;
     SDL_Rect window_size;
 };
 

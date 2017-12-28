@@ -6,7 +6,6 @@
 #include <thread>
 #include <queue>
 #include <mutex>
-#include "textbox.hpp"
 //#include "structs.h"
 
 /**
@@ -48,7 +47,7 @@ class MessageWriter
         /**
          * \brief Sets the GUI output box to be printed on
          */
-        void SetOutputBox(TextBox& output_box);
+        // void SetOutputBox(TextBox& output_box);
 
     private:
         /**
@@ -103,7 +102,7 @@ class MessageWriter
         /**
          * \brief Pointer an output box (currently only the one in maimenu)
          */
-        TextBox* m_output_box;
+        // TextBox* m_output_box;
 
 };
 

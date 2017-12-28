@@ -90,21 +90,21 @@ void MessageWriter::WriteLineToConsole(const std::string& message)
 void MessageWriter::ProcessGUIQueue()
 {
     //NOT CURRENTLY IN USE
-    while(m_running)
-    {
-
-        if(!m_gui_message_queue.empty() && m_output_box)
-        {
-            m_gui_mutex.lock();
-
-            //m_output_box->SetString(m_gui_message_queue.front());
-            m_gui_message_queue.pop();
-
-            m_gui_mutex.unlock();
-        }
-        else
-            std::this_thread::sleep_for(0.5s);
-    }
+    // while(m_running)
+    // {
+    //
+    //     if(!m_gui_message_queue.empty() && m_output_box)
+    //     {
+    //         m_gui_mutex.lock();
+    //
+    //         //m_output_box->SetString(m_gui_message_queue.front());
+    //         m_gui_message_queue.pop();
+    //
+    //         m_gui_mutex.unlock();
+    //     }
+    //     else
+    //         std::this_thread::sleep_for(0.5s);
+    // }
 }
 
 void MessageWriter::WriteToOutputBox(const std::string& message)
@@ -116,7 +116,7 @@ void MessageWriter::WriteToOutputBox(const std::string& message)
     m_gui_mutex.unlock();
 }
 
-void MessageWriter::SetOutputBox(TextBox& output_box)
-{
-    m_output_box = &output_box;
-}
+// void MessageWriter::SetOutputBox(TextBox& output_box)
+// {
+//     m_output_box = &output_box;
+// }
