@@ -65,7 +65,7 @@ std::string Problem052()
     // 2x, 3x, 4x, 5x, and 6x
     for(long i{10}; ; ++i)
     {
-        long base_number_of_digits{ NumberOfDigits(i) };
+        long base_number_of_digits{ (long)NumberOfDigits(i) };
         long multiple_2{ i * 2 };
         if(NumberOfDigits(multiple_2) == base_number_of_digits)
         {

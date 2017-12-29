@@ -19,7 +19,6 @@
 #include <thread>
 #include <future>
 
-#include <SDL2/SDL_ttf.h>
 #include <thread>
 
 #include "graphs_and_grids.hpp"

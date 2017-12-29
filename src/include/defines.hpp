@@ -13,11 +13,12 @@
 
 #elif defined(_WIN32) || defined(_WIN64)
     #include <boost/multiprecision/cpp_int.hpp>
+    #include <boost/multiprecision/cpp_dec_float.hpp>
     #undef BigInt_t
     #define BigInt_t boost::multiprecision::int1024_t
 
     #undef BigFloat_t
-    #define BigFloat_t boost::multiprecision::cpp_dec_float
+    #define BigFloat_t boost::multiprecision::cpp_dec_float_100
 //#endif // _WIN32
 #else
 

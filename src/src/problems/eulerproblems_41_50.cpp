@@ -206,6 +206,6 @@ std::string Problem049()
         }
     }
 
-    MessageWriter::Instance()->WriteToOutputBox("P049: "+result+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
-    return "";
+    // MessageWriter::Instance()->WriteToOutputBox("P049: "+result+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
+    return "P049: "+result+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms";
 }

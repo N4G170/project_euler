@@ -13,7 +13,6 @@
 #include <utility>
 
 
-#include <SDL2/SDL_ttf.h>
 #include <thread>
 #include <future>
 #include <chrono>

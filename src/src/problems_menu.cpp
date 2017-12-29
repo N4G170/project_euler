@@ -36,6 +36,7 @@ ProblemsMenu::ProblemsMenu(sdl_gui::GuiManager* gui_manager, StateMachine* state
 
     m_input_label->Parent(input_container);
     m_input_label->LocalPosition({ 170/2.f - m_input_label->Size().w/2.f, input_y });
+    m_input_label->RenderIndex(-1);
 
     //bg for Label
     auto bg_size{m_input_label->Size()};
@@ -128,7 +129,11 @@ ProblemsMenu::ProblemsMenu(sdl_gui::GuiManager* gui_manager, StateMachine* state
 
     //<f> Number of Problems
     auto problems_label{gui_manager->CreateElement<sdl_gui::Label>({0,0}, {0,0})};
+    #if defined(__linux__) || defined(__gnu_linux__)
     problems_label->Text("Available Problems: 1-25, 27, 29, 30, 34-36, 40, 42, 48, 49, 52, 67, 71-73, 80, 81, 83, 92, 94");
+    #elif defined(_WIN32) || defined(_WIN64)
+    problems_label->Text("Available Problems: 1-24, 27, 29, 30, 34, 35, 40, 42, 48, 49, 52, 67, 71-73, 80, 81, 83, 92");
+    #endif
     problems_label->Parent(input_container);
     problems_label->LocalPosition({-25, input_y + 100});
     //</f> /Number of Problems
@@ -240,7 +245,9 @@ void ProblemsMenu::RequestProblem()
         case 22: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem022); break;
         case 23: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem023); break;
         case 24: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem024); break;
+        #if defined(__linux__) || defined(__gnu_linux__)
         case 25: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem025); break;
+        #endif
         //case 26: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem026); break;
         case 27: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem027); break;
         //case 28: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem028); break;
@@ -249,8 +256,9 @@ void ProblemsMenu::RequestProblem()
 
         case 34: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem034); break;
         case 35: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem035); break;
+        #if defined(__linux__) || defined(__gnu_linux__)
         case 36: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem036); break;
-
+        #endif
         case 40: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem040); break;
 
         case 42: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem042); break;
@@ -276,8 +284,9 @@ void ProblemsMenu::RequestProblem()
         case 83: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem083); break;
 
         case 92: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem092); break;
+        #if defined(__linux__) || defined(__gnu_linux__)
         case 94: m_problems_future[requested_problem].first = true; m_problems_future[requested_problem].second = std::async(std::launch::async, &Problem094); break;
-
+        #endif
         default: m_results_box->CreateItem("Problem "+m_number+" does not exist"); break;
     }
 

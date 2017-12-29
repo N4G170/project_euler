@@ -1,7 +1,7 @@
 #ifndef CONSTANTS_HPP
 #define CONSTANTS_HPP
 
-#include <SDL2/SDL.h>
+#include "SDL.h"
 #include <string>
 #include "structs.hpp"
 
