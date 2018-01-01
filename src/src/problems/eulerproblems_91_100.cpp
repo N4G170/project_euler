@@ -8,7 +8,6 @@
 #include <utility>
 #include <bitset>
 #include <cmath>
-#include <boost/multiprecision/number.hpp>
 #include <algorithm>
 
 #include "message_writer.hpp"
@@ -72,20 +71,20 @@ std::string Problem094()
 {
     auto clock_id = Clock::Instance()->StartClock();
 
-    long perimeter_sum = 0;
-    long perimeter_limit = 1000000000;
+    long_t perimeter_sum = 0;
+    long_t perimeter_limit = 1000000000;
 
-    long side{0};
-    long perimeter_1{0};
-    long perimeter_2{0};
+    long_t side{0};
+    long_t perimeter_1{0};
+    long_t perimeter_2{0};
 
-    auto HasIntegralArea = [](const long& a, const long& b)->bool
+    auto HasIntegralArea = [](const long_t& a, const long_t& b)->bool
     {
         //if(b % 2 != 0)
         //    return false;
 
-        long h_squared{ (a * a - b * b / 4) };
-        long root_of_h{ static_cast<long>(std::sqrt(h_squared)) };
+        long_t h_squared{ (a * a - b * b / 4) };
+        long_t root_of_h{ static_cast<long_t>(std::sqrt(h_squared)) };
 
         if(root_of_h * root_of_h == h_squared && h_squared > 1)
         {

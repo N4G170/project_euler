@@ -13,8 +13,8 @@
 std::string Problem051()//does not work yet
 {
     int sequence_size = 0;
-    unsigned long current_number = 56003;//this value comes from the problem description
-    unsigned long min_number = ULONG_MAX;
+    ulong_t current_number = 56003;//this value comes from the problem description
+    ulong_t min_number = ULONG_MAX;
 
 
     while(sequence_size < 8)
@@ -39,7 +39,7 @@ std::string Problem051()//does not work yet
             for(;j < 10; j++)
             {
                 number_string[i]=j;
-                unsigned long number = std::stoul(number_string);
+                ulong_t number = std::stoul(number_string);
 
                 if(IsPrime(number))
                 {
@@ -60,25 +60,25 @@ std::string Problem052()
 {
     auto clock_id = Clock::Instance()->StartClock();
 
-    long result{0};
+    long_t result{0};
 
     // 2x, 3x, 4x, 5x, and 6x
-    for(long i{10}; ; ++i)
+    for(long_t i{10}; ; ++i)
     {
-        long base_number_of_digits{ (long)NumberOfDigits(i) };
-        long multiple_2{ i * 2 };
+        long_t base_number_of_digits{ (long_t)NumberOfDigits(i) };
+        long_t multiple_2{ i * 2 };
         if(NumberOfDigits(multiple_2) == base_number_of_digits)
         {
-            long multiple_3{ i * 3 };
+            long_t multiple_3{ i * 3 };
             if(NumberOfDigits(multiple_3) == base_number_of_digits)
             {
-                long multiple_4{ i * 4 };
+                long_t multiple_4{ i * 4 };
                 if(NumberOfDigits(multiple_4) == base_number_of_digits)
                 {
-                    long multiple_5{ i * 5 };
+                    long_t multiple_5{ i * 5 };
                     if(NumberOfDigits(multiple_5) == base_number_of_digits)
                     {
-                        long multiple_6{ i * 6 };
+                        long_t multiple_6{ i * 6 };
                         if(NumberOfDigits(multiple_6) == base_number_of_digits)
                         {
                             if( IsPermutation(multiple_2, multiple_3) && IsPermutation(multiple_2, multiple_4) &&

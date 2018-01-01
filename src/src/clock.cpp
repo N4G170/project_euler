@@ -32,13 +32,13 @@ std::unique_ptr<Clock>& Clock::Instance()
  * \brief Starts a new timer
  * \return Id to the new timer running
  */
-unsigned long Clock::StartClock()
+ulong_t Clock::StartClock()
 {
     //lock->increase->unlock
     m_mutex.lock();
 
     m_id_counter++;
-    unsigned long new_id = m_id_counter;
+    ulong_t new_id = m_id_counter;
 
     m_mutex.unlock();
 
@@ -52,7 +52,7 @@ unsigned long Clock::StartClock()
  * \brief Stops a specific timer
  * \return std::string with the time in miliseconds
  */
-std::string Clock::StopAndReturnClock(unsigned long id, TimeScale scale)
+std::string Clock::StopAndReturnClock(ulong_t id, TimeScale scale)
 {
     if(m_clocks.find(id) == m_clocks.end())//id does not exist
         return "Invalid clock ID - "+std::to_string(id);

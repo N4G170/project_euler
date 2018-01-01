@@ -70,17 +70,17 @@ std::string Problem003()
 {
     auto clock_id = Clock::Instance()->StartClock();
 
-    long number = 600851475143;
+    long_t number = 600851475143;
 
     //get a vector with all the numbers that are primes up to sqrt(600851475143)
     //the limit is sqrt(600851475143) because we are looking for 600851475143 factors and there are none bigger that sqrt(600851475143)
-    std::vector<unsigned long> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(sqrt(600851475143)));
-    unsigned long max_factor = 0;
+    std::vector<ulong_t> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(sqrt(600851475143)));
+    ulong_t max_factor = 0;
 
     //find all factors
     while(number > 1)
     {
-        for(unsigned long prime : primes)
+        for(ulong_t prime : primes)
         {
             if(number % prime == 0)//factor found
             {
@@ -173,7 +173,7 @@ std::string Problem007()
     auto clock_id = Clock::Instance()->StartClock();
 
     //the limit used in the SieveOfEratosthenes call was chosen based on trial and error, as no data for it was given
-    std::vector<unsigned long> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(150000));//has 13848
+    std::vector<ulong_t> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(150000));//has 13848
 
     //We use 10000 index as the vector starts at 0, so index 10000 = prime 10001
     //MessageWriter::Instance()->WriteToOutputBox("P007: "+std::to_string(primes[10000])+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
@@ -211,11 +211,11 @@ std::string Problem008()
                             "05886116467109405077541002256983155200055935729725"
                             "71636269561882670428252483600823257530420752963450";
 
-    unsigned long greatest_product = 0;
+    ulong_t greatest_product = 0;
 
     for(unsigned int i=0; i<str_int.size()-13; i++)//-13 because we are looking for 13 long chains
     {
-        unsigned long tmp_product = 1;
+        ulong_t tmp_product = 1;
         for(int j=0; j<13; j++)//the chain is allways horizontal, as it is a single number and not multiple ones as str_int declaration might sugest
         {
             if(str_int[i+j] == ascii_zero)
@@ -282,10 +282,10 @@ std::string Problem010()
 {
     auto clock_id = Clock::Instance()->StartClock();
 
-    long sum = 0;
+    long_t sum = 0;
 
     //will return all primes < 2 Million
-    std::vector<unsigned long> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(2000000));
+    std::vector<ulong_t> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(2000000));
 
     for(auto& prime : primes)
         sum += prime;

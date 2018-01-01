@@ -48,14 +48,14 @@ std::string Problem011()
                          { 1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52,  1, 89, 19, 67, 48}};
 
     short grid_size = 20;
-    long max_product = 1;
-    std::string str = "";
+    long_t max_product = 1;
+    // std::string str = "";
 
     for(int i = 0; i < grid_size; i++)//row
     {
         for(int j=0; j < grid_size; j++)//column
         {
-            long product = 1;
+            long_t product = 1;
             for(int k = j; k < j + 4 && k < grid_size; k++)//horizontal, right
             {
                 product *= grid[i][k];
@@ -106,12 +106,12 @@ std::string Problem012()
 {
     auto clock_id = Clock::Instance()->StartClock();
 
-    unsigned long current_number = 1;
-    unsigned long i = 1;
+    ulong_t current_number = 1;
+    ulong_t i = 1;
     int total_divisors = 1;
 
-    std::vector<unsigned long> primes = PrimeNumberPoolOfSize(70000);//number based on testing
-    std::map<unsigned long, unsigned long> prime_factors;
+    std::vector<ulong_t> primes = PrimeNumberPoolOfSize(70000);//number based on testing
+    std::map<ulong_t, ulong_t> prime_factors;
 
     while(total_divisors < 500)
     {
@@ -158,7 +158,7 @@ std::string Problem013()
         }
 
        //MessageWriter::Instance()->WriteToOutputBox("P013: "+result.get_str().substr(0,10)+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
-       return ("P013: "+result.str().substr(0,10)+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
+       return ("P013: "+result.get_str().substr(0,10)+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
 
     }
     else
@@ -181,7 +181,7 @@ std::string Problem014()
 
     for(int i = 2; i <= 1000000; i++)//all number until 1'000'000
     {
-        unsigned long current_number = i;
+        ulong_t current_number = i;
         int chain_length = 2;//includes the number itself and number 1
 
         while(current_number > 1)
@@ -213,9 +213,9 @@ std::string Problem015()
     //the problem works with a 20x20 grid of squares, I'll use a 21x21 grid of vertices
     //this 21x21 "matrix" will store all the nodes
     const int grid_size=21;
-    unsigned int destination_id = std::stoul(std::to_string(grid_size) + std::to_string(grid_size));//id will be grid_size+grid_size ex grid_size=5 destination = 55
+    // unsigned int destination_id = std::stoul(std::to_string(grid_size) + std::to_string(grid_size));//id will be grid_size+grid_size ex grid_size=5 destination = 55
 
-    short implementation = 3;//1-Depth_First; 2-Breadth_First; 3-Pascal_Triangle
+    // short implementation = 3;//1-Depth_First; 2-Breadth_First; 3-Pascal_Triangle
 
     std::array<std::array<SquareGridGraphNode, grid_size>, grid_size> nodes;
 
@@ -244,93 +244,93 @@ std::string Problem015()
         }
     }
 
-    //{ Depth First - works, but slow as hell
-    if(implementation == 1)
-    {
-        //calculate number of Lattice paths, while only being able to move to the right and down
-        std::stack<SquareGridGraphNode*> nodes_to_check_df;
+    // <f> Depth First - works, but slow as hell
+    // if(implementation == 1)
+    // {
+    //     //calculate number of Lattice paths, while only being able to move to the right and down
+    //     std::stack<SquareGridGraphNode*> nodes_to_check_df;
+    //
+    //     nodes_to_check_df.push(&nodes[0][0]);
+    //
+    //     ulong_t total_paths = 0;
+    //
+    //
+    //     while(!nodes_to_check_df.empty())
+    //     {
+    //         SquareGridGraphNode* current_node = nodes_to_check_df.top();
+    //         nodes_to_check_df.pop();
+    //
+    //         //MessageWriter::Instance()->WriteLineToConsole(std::to_string(current_node->m_node_id));
+    //
+    //         if(current_node->m_down_node != nullptr)
+    //         {
+    //             nodes_to_check_df.push(current_node->m_down_node);
+    //         }
+    //
+    //         if(current_node->m_right_node != nullptr)
+    //         {
+    //             nodes_to_check_df.push(current_node->m_right_node);
+    //         }
+    //
+    //         if(current_node->m_node_id == destination_id)
+    //         {
+    //             total_paths++;
+    //         }
+    //     }
+    // }
+    // </f>
 
-        nodes_to_check_df.push(&nodes[0][0]);
-
-        unsigned long total_paths = 0;
-
-
-        while(!nodes_to_check_df.empty())
-        {
-            SquareGridGraphNode* current_node = nodes_to_check_df.top();
-            nodes_to_check_df.pop();
-
-            //MessageWriter::Instance()->WriteLineToConsole(std::to_string(current_node->m_node_id));
-
-            if(current_node->m_down_node != nullptr)
-            {
-                nodes_to_check_df.push(current_node->m_down_node);
-            }
-
-            if(current_node->m_right_node != nullptr)
-            {
-                nodes_to_check_df.push(current_node->m_right_node);
-            }
-
-            if(current_node->m_node_id == destination_id)
-            {
-                total_paths++;
-            }
-        }
-    }
-    //}
-
-    //{ Breadth First - Slow, but faster than Depth First and uses lots of memory
-    if(implementation == 2)
-    {
-        unsigned int total = 0;
-        std::queue<SquareGridGraphNode*> nodes_to_check_bf;
-
-        nodes_to_check_bf.push(&nodes[0][0]);
-
-        while(!nodes_to_check_bf.empty())
-        {
-            SquareGridGraphNode* current_node = nodes_to_check_bf.front();
-            nodes_to_check_bf.pop();
-
-            if(current_node->m_down_node != nullptr)
-            {
-                if(current_node->m_down_node->m_node_id == destination_id)//does not enqueue if destination was found
-                {
-                    total++;
-                }
-                else
-                    nodes_to_check_bf.push(current_node->m_down_node);
-
-            }
-
-            if(current_node->m_right_node != nullptr)
-            {
-                if(current_node->m_right_node->m_node_id == destination_id)//does not enqueue if destination was found
-                {
-                    total++;
-                }
-                else
-                    nodes_to_check_bf.push(current_node->m_right_node);
-
-            }
-        }
-    }
-    //}
+    // <f> Breadth First - Slow, but faster than Depth First and uses lots of memory
+    // if(implementation == 2)
+    // {
+    //     unsigned int total = 0;
+    //     std::queue<SquareGridGraphNode*> nodes_to_check_bf;
+    //
+    //     nodes_to_check_bf.push(&nodes[0][0]);
+    //
+    //     while(!nodes_to_check_bf.empty())
+    //     {
+    //         SquareGridGraphNode* current_node = nodes_to_check_bf.front();
+    //         nodes_to_check_bf.pop();
+    //
+    //         if(current_node->m_down_node != nullptr)
+    //         {
+    //             if(current_node->m_down_node->m_node_id == destination_id)//does not enqueue if destination was found
+    //             {
+    //                 total++;
+    //             }
+    //             else
+    //                 nodes_to_check_bf.push(current_node->m_down_node);
+    //
+    //         }
+    //
+    //         if(current_node->m_right_node != nullptr)
+    //         {
+    //             if(current_node->m_right_node->m_node_id == destination_id)//does not enqueue if destination was found
+    //             {
+    //                 total++;
+    //             }
+    //             else
+    //                 nodes_to_check_bf.push(current_node->m_right_node);
+    //
+    //         }
+    //     }
+    // }
+    // </f>
 
     //{ Pascal Triangle - After some search, it seems that this specific lattice path search (only down and right),
     //is replicating the Pascal Triangle and the solution to this problem can be found with C(n, k) = n!/(k!*(n-k))
     //Which can be simplified for any grind a * b -> [(a+b)!]/[a!* b!]
     //Need to keep in mind that this problems, probably, have a simple mathematical solution
     //so:
-    unsigned long a = 20;
-    unsigned long b = 20;
+    ulong_t a = 20;
+    ulong_t b = 20;
 
     //mpz_class big_result = BigFactorial(a + b) / (BigFactorial(a) * BigFactorial(b));
     BigInt_t big_result = BigFactorial(a + b) / (BigFactorial(a) * BigFactorial(b));
 
     //MessageWriter::Instance()->WriteToOutputBox("P015: "+big_result.get_str()+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
-    return ("P015: "+big_result.str()+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
+    return ("P015: "+big_result.get_str()+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
     //}
 
 }
@@ -339,11 +339,11 @@ std::string Problem016()
 {
     auto clock_id = Clock::Instance()->StartClock();
 
-    BigInt_t big_number;
+    BigInt_t big_number{0};
 
-    big_number = boost::multiprecision::pow(BigInt_t(2), 1000);
+    mpz_ui_pow_ui(big_number.get_mpz_t(), 2, 1000);
 
-    std::string big_number_string=big_number.str();
+    std::string big_number_string=big_number.get_str();
 
     int digit_sum=0;
     for(char& digit : big_number_string)
@@ -664,7 +664,7 @@ std::string Problem020()
     std::future<BigInt_t> future_71_100 = std::async(std::launch::async, &BigPartialFactorial, 71,100);
 
     BigInt_t final_result = future_1_50.get() * future_51_70.get() * future_71_100.get();
-    std::string factorial_100 = final_result.str();
+    std::string factorial_100 = final_result.get_str();
 
     final_result = 0;//clear BigInt_t var as we will reuse it to calculate the last result
     for(auto& letter : factorial_100)
@@ -674,5 +674,5 @@ std::string Problem020()
     }
 
     //MessageWriter::Instance()->WriteToOutputBox("P020: "+final_result.get_str()+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
-    return ("P020: "+final_result.str()+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
+    return ("P020: "+final_result.get_str()+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
 }

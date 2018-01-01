@@ -76,7 +76,7 @@ std::string Problem022()
         file.close();
     }
 
-    unsigned long total = 0;
+    ulong_t total = 0;
 
     if(!words.empty())
     {
@@ -173,7 +173,7 @@ std::string Problem024()
 
         for(unsigned int i = 0; i < digits.size(); i++ )
         {
-            if( digits[i] > digits[k] && (int)i > k )
+            if( static_cast<int>(i) > k && digits[i] > digits[k] )
             {
                 if((int)i > l)
                     l = i;
@@ -212,7 +212,7 @@ std::string Problem025()
     BigInt_t fn = 0;//the problem text already has F1 -> F12
     BigInt_t fn_1 = 1;//fibonacci Fn-1 -> F1 = 1
     BigInt_t fn_2 = 1;//fibonacci Fn-2 -> F2 = 1
-    unsigned long current_fibonacci_term = 2;
+    ulong_t current_fibonacci_term = 2;
 
     while(true)
     {
@@ -220,7 +220,7 @@ std::string Problem025()
         current_fibonacci_term++;
         fn = fn_1 + fn_2;
 
-        if(fn.str().size() == 1000)//found first of lenght 1000 digits
+        if(fn.get_str().size() == 1000)//found first of lenght 1000 digits
             break;
 
         fn_2 = fn_1;
@@ -242,14 +242,14 @@ std::string Problem026()//this function is not working and I've yet to find the 
 
     //std::map<unsigned int, mpz_class> decimal_representation;
 
-    long double decimal_representation;//mpf -> floats, the mpz->int
+    // long double decimal_representation;//mpf -> floats, the mpz->int
 
     unsigned int longest_recurring_cycle_size = 0;
    // unsigned int longest_recurring_cycle_denominator = 1;
 
     for(float i = 11; i < 1000; i++)//will start on 11 as the problem already analysed
     {
-        decimal_representation = 1 / i;
+        long double decimal_representation = 1 / i;
 
         if(std::to_string(decimal_representation).size() > 2)//has decimal
         {
@@ -295,9 +295,9 @@ std::string Problem027()
     auto clock_id = Clock::Instance()->StartClock();
 
     unsigned int max_number_of_primes = 0;
-    long coeficients_product = 1;
+    long_t coeficients_product = 1;
 
-    std::vector<unsigned long> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(1000));
+    std::vector<ulong_t> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(1000));
 
     for(int a = -999; a < 1000; a++)
     {
@@ -308,7 +308,7 @@ std::string Problem027()
             //n^2 + an + b
             for(unsigned int n = 0; ; n++)
             {
-                long number = n*n + a*n + b;
+                long_t number = n*n + a*n + b;
 
                 if(number > 1)//positive and not 1
                 {
@@ -347,7 +347,7 @@ std::string Problem029()
     {
         for(int b = 2; b < 101; b++)
         {
-            term = boost::multiprecision::pow( BigInt_t(a), b );
+            mpz_ui_pow_ui(term.get_mpz_t(), a, b);
 
             //a set does not allow multiple entries with the same value, so we do not need to check if its exists
             distinct_terms.insert( term );

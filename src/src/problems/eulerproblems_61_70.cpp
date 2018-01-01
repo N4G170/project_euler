@@ -6,6 +6,7 @@
 #include <queue>
 #include <iostream>
 #include <utility>
+#include <array>
 
 #include "message_writer.hpp"
 #include "clock.hpp"
@@ -77,7 +78,7 @@ std::string Problem061()//does not work yet, no idea what the problem is. Might 
 
     //try to change to a recursive implementation as the nested fors are messy
     //check for chain
-    //for(unsigned int i = 0; i < poligonal_numbers.size(); i++)//check for first
+    for(unsigned int i = 0; i < poligonal_numbers.size(); i++)//check for first
     {
         //{1º
 //        if(chain_found)

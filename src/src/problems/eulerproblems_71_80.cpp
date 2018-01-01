@@ -19,21 +19,20 @@
 #include <cstdlib>
 #include <numeric>
 #include <functional>
-#include <boost/multiprecision/number.hpp>
 #include <thread>
+#include <cmath>
 
 
 std::string Problem071()
 {//farey sequence - tried Calkin–Wilf tree and Stern-Brocot Tree
     auto clock_id = Clock::Instance()->StartClock();
 
-    long n1{2}, d1{5}, n2{3}, d2{7};//values from sequence in the problem description
-    long cn{0}, cd{0};
+    long_t n1{2}, d1{5}, n2{3}, d2{7};//values from sequence in the problem description
 
     while(true)
     {
-        cn = n1 + n2;
-        cd = d1 + d2;
+        long_t cn = n1 + n2;
+        long_t cd = d1 + d2;
 
         if(cd >= 1000000)
             break;
@@ -62,9 +61,9 @@ std::string Problem072()
     //phi(n) = n * (1 - 1/p1) * ... * (1 - 1/pn), where p1...pn are the prime factors or n
 
     int inclusive_limit = 1000000;
-    long long total_coprimes = 0;
+    long_t total_coprimes = 0;
 
-    std::vector<unsigned long> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(inclusive_limit + 1));
+    std::vector<ulong_t> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(inclusive_limit + 1));
     // std::cout << "P: "<<primes[primes.size()-1] << "\n";
     //calculate prime factors of numbers
     for(int i = 1; i <= inclusive_limit; ++i)//|F(n)| = 1 + sum( phi(m) ) where m=1 and goes to 'inclusive_limit'
@@ -103,8 +102,8 @@ std::string Problem073()
     while (next.Denominator() != 1.0)
     {
         // Using recurrence relation to find the next term
-        next.Numerator( floor((previous.Denominator() + order) / current.Denominator()) * current.Numerator() - previous.Numerator() );
-        next.Denominator( floor((previous.Denominator() + order) / current.Denominator()) * current.Denominator() - previous.Denominator() );
+        next.Numerator( std::floor((previous.Denominator() + order) / current.Denominator()) * current.Numerator() - previous.Numerator() );
+        next.Denominator( std::floor((previous.Denominator() + order) / current.Denominator()) * current.Denominator() - previous.Denominator() );
 
         //store fraction in orderer set
         //fractions.insert(next);
@@ -221,10 +220,10 @@ std::string Problem080()
 {
     auto clock_id = Clock::Instance()->StartClock();
     int limit{100};
-    long sum{ 0 };
+    long_t sum{ 0 };
 
     std::vector<BigFloat_t> numbers_with_irrational_root;
-    std::vector<unsigned long> primes = PrimeBoolVectorToIntVector( SieveOfEratosthenes( limit ) );
+    std::vector<ulong_t> primes = PrimeBoolVectorToIntVector( SieveOfEratosthenes( limit ) );
     //se ignorar os ^2 tb dá
     for(int i = 2; i < limit; i++)
     {
@@ -242,17 +241,20 @@ std::string Problem080()
     }
 
     BigFloat_t root;
-    root.precision(101);
+    root.set_prec(350);//min number of bits
+    Exponent_t expo;
 
     for(BigFloat_t f : numbers_with_irrational_root)
     {
-        root = boost::multiprecision::sqrt(f);
+        mpf_sqrt(root.get_mpf_t(), f.get_mpf_t());
 
-        std::string str{root.str()};
-        str = str.erase( str.find_first_of('.'), 1 );//remove '.'
+        std::string str{root.get_str(expo)};//the returned string does not have dots in it
 
-        for(unsigned int i = 0; i < 100; i++)
-            sum += (str[i] - '0');
+        for(auto i = 0; i < 100; ++i)//we only want the first 100 digits
+        {
+            std::string number{str[i]};
+            sum += std::stoi(number);
+        }
     }
 
     // MessageWriter::Instance()->WriteToOutputBox("P080: "+std::to_string(sum)+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");

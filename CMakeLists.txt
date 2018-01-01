@@ -39,9 +39,6 @@ include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 find_package(SDL2_ttf REQUIRED)
 include_directories(${SDL2_TTF_INCLUDE_DIR})
 
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIR})
-
 if (UNIX)
 
 find_package(GMP REQUIRED)
@@ -49,27 +46,10 @@ include_directories(${GMP_INCLUDE_DIR})
 
 endif (UNIX)
 
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIR})
-
-#SDL2 mixer
-#find_package(SDL2_mixer REQUIRED)
-#include_directories(${SDL2_MIXER_INCLUDE_DIR})
-#SDL2 net
-#find_package(SDL2_net REQUIRED)
-#include_directories(${SDL2_NET_INCLUDE_DIR})
-#Lua
-#find_package(Lua REQUIRED)
-#include_directories(${LUA_INCLUDE_DIR})
-#Vulkan
-#find_package(Vulkan REQUIRED)
-#include_directories(${Vulkan_INCLUDE_DIR})
-#find_package(GLM REQUIRED)
-#include_directories(${GLM_INCLUDE_DIR})
 
 set(sdl_gui_include_dir ${CMAKE_SOURCE_DIR}/sdl_gui/include)
 include_directories(${sdl_gui_include_dir})
-set(sdl_gui_lib ${CMAKE_SOURCE_DIR}/sdl_gui/lib/libsdl_gui.so)
+set(sdl_gui_lib ${CMAKE_SOURCE_DIR}/sdl_gui/lib/libsdl_gui.a)
 
 add_executable(${app_name} ${SOURCE_FILES} ${HEADER_FILES})
 

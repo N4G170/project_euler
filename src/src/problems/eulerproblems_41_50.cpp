@@ -37,7 +37,7 @@ std::string Problem042()
         file.close();
     }
 
-    unsigned long total_triangle_words = 0;
+    ulong_t total_triangle_words = 0;
 
     if(!words.empty())
     {
@@ -74,11 +74,11 @@ std::string Problem047()//does not work yet, no idea what the problem is
 {
     auto clock_id = Clock::Instance()->StartClock();
 
-    std::vector<unsigned long> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(1000000));
+    std::vector<ulong_t> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(1000000));
 
-    std::set<std::pair<unsigned long, unsigned long>> unique_factors;
-    std::vector<std::map<unsigned long, unsigned long>> all_factors;
-    unsigned long first_of_sequence = 0;
+    std::set<std::pair<ulong_t, ulong_t>> unique_factors;
+    std::vector<std::map<ulong_t, ulong_t>> all_factors;
+    ulong_t first_of_sequence = 0;
 
     unsigned int limit = 1000000;
 
@@ -129,11 +129,11 @@ std::string Problem048()
 
     for(int i = 1; i < 1001; i++)
     {
-        power = boost::multiprecision::pow(BigInt_t(i), i);
+        mpz_ui_pow_ui(power.get_mpz_t(), i, i);
         number += power;
     }
 
-    std::string result = number.str().substr(number.str().size() - 10);
+    std::string result = number.get_str().substr(number.get_str().size() - 10);
     //MessageWriter::Instance()->WriteToOutputBox("P047: "+std::to_string(current_fibonacci_term)+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
     return ("P048: "+result+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
 }
@@ -143,7 +143,7 @@ std::string Problem049()
     auto clock_id = Clock::Instance()->StartClock();
     std::string result;
 
-    std::vector<unsigned long> primes = PrimeBoolVectorToIntVector( SieveOfEratosthenes(10000));//only 4 digit primes are needed
+    std::vector<ulong_t> primes = PrimeBoolVectorToIntVector( SieveOfEratosthenes(10000));//only 4 digit primes are needed
 
     // auto IsPermutation = [](long number_1, long number_2)->bool
     // {
@@ -168,7 +168,7 @@ std::string Problem049()
     //     return true;
     // };
 
-    auto FindPrime = [&primes](unsigned long prime, unsigned int start_index)->bool
+    auto FindPrime = [&primes](ulong_t prime, unsigned int start_index)->bool
     {
         for( ; start_index < primes.size(); start_index++)
         {

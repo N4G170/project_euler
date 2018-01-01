@@ -28,7 +28,7 @@ std::string Problem081()
     //load grid
     std::vector<int> grid = LoadProblemMatrixAsRowMajorVector("p081");
 
-    long short_path = FindShortPath(0, 80*80-1, 80, 80, grid, directions);
+    long_t short_path = FindShortPath(0, 80*80-1, 80, 80, grid, directions);
 
     // MessageWriter::Instance()->WriteToOutputBox("P081: "+std::to_string(short_path)+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
     return ("P081: "+std::to_string(short_path)+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
@@ -47,13 +47,13 @@ std::string Problem082()
     std::vector<int> grid = LoadProblemMatrixAsRowMajorVector("p082");
     int width = 80;
 
-    long short_path = LONG_MAX;
+    long_t short_path = LONG_MAX;
 
     for(int i = 0; i < width; i++)
     {
         for(int j = 0; j < width; j++)
         {
-            long tmp_path = FindShortPath(i * width, j * width + (width-1), width, width, grid, directions);
+            long_t tmp_path = FindShortPath(i * width, j * width + (width-1), width, width, grid, directions);
 
             if(tmp_path < short_path)
                 short_path = tmp_path;
@@ -74,7 +74,7 @@ std::string Problem083()
     //load grid
     std::vector<int> grid = LoadProblemMatrixAsRowMajorVector("p083");
 
-    long short_path = FindShortPath(0, 80*80-1, 80, 80, grid, directions);
+    long_t short_path = FindShortPath(0, 80*80-1, 80, 80, grid, directions);
 
     // MessageWriter::Instance()->WriteToOutputBox("P083: "+std::to_string(short_path)+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");
     return ("P083: "+std::to_string(short_path)+ " in "+Clock::Instance()->StopAndReturnClock(clock_id) + " ms");

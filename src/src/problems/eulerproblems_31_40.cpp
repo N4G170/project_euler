@@ -52,13 +52,13 @@ std::string Problem035()
 {
     auto clock_id = Clock::Instance()->StartClock();
 
-    std::vector<unsigned long> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(1000000));
+    std::vector<ulong_t> primes = PrimeBoolVectorToIntVector(SieveOfEratosthenes(1000000));
 
     std::string prime_str = "";
     std::string prime_str_permutation = "";
     unsigned int total_circular_primes = 0;
 
-    for(unsigned long prime : primes)
+    for(ulong_t prime : primes)
     {
         prime_str = std::to_string(prime);
         prime_str_permutation = prime_str;
@@ -101,7 +101,7 @@ std::string Problem036()
     {
         std::bitset<32> b2 (i);
 
-        if( IsPalindrome(i) && IsPalindrome(std::stoul( b2.to_string() )) )//the std::stoul will remove any leading zeros
+        if( IsPalindrome(i) && IsPalindrome(std::stoull( b2.to_string() )) )//the std::stoull will remove any leading zeros (windows needs stoull)
         {
             double_palindrome_sum += i;
         }

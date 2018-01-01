@@ -8,6 +8,7 @@
 #include <map>
 
 #include "enums.hpp"
+#include "defines.hpp"
 
 /**
  * \brief Basic SINGLETON class to manage a small clock to be used by Euler Problems functions
@@ -30,19 +31,19 @@ class Clock
          * \brief Starts a new timer
          * \return Id to the new timer running
          */
-        unsigned long StartClock();
+        ulong_t StartClock();
 
         /**
          * \brief Stops a specific timer
          * \return std::string with the time in miliseconds
          */
-        std::string StopAndReturnClock(unsigned long id, TimeScale scale = TimeScale::MILLISECONDS);
+        std::string StopAndReturnClock(ulong_t id, TimeScale scale = TimeScale::MILLISECONDS);
 
         /**
          * \brief Stops a specific timer
          * \return std::string with the time in miliseconds
          */
-        //std::string ReturnClockStep(unsigned long id, TimeScale scale = TimeScale::MILLISECONDS);
+        //std::string ReturnClockStep(ulong_t id, TimeScale scale = TimeScale::MILLISECONDS);
 
     private:
         /**
@@ -58,12 +59,12 @@ class Clock
         /**
          * \brief Counter to generate ids for new timers
          */
-        unsigned long m_id_counter;
+        ulong_t m_id_counter;
 
         /**
          * \brief std::map storing the timers currently running
          */
-        std::map<unsigned long, std::chrono::time_point<std::chrono::steady_clock> > m_clocks;
+        std::map<ulong_t, std::chrono::time_point<std::chrono::steady_clock> > m_clocks;
 
         /**
          * \brief std::mutex to control id counter access
