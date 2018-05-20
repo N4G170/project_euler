@@ -4,8 +4,16 @@ cmake_minimum_required(VERSION 3.8.2)
 project("Project Euler" CXX)
 # set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD 14)
+
+if(NOT CMAKE_BUILD_TYPE)
 # set(CMAKE_BUILD_TYPE Debug)
-# set(CMAKE_BUILD_TYPE RelWithDebInfo)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+# set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
 set(app_name "euler")
 
 #include_directories(src)#will search inside all directories inside src
@@ -29,6 +37,7 @@ get_directory_property(HEADER_FILES DIRECTORY src DEFINITION HEADER_FILES)
 
 # includes cmake_modules/FindSDL2*.cmake
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+if (UNIX)
 #SDL2
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
@@ -38,22 +47,45 @@ include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 #SDL2 ttf
 find_package(SDL2_ttf REQUIRED)
 include_directories(${SDL2_TTF_INCLUDE_DIR})
-
-if (UNIX)
-
+#GMP
 find_package(GMP REQUIRED)
 include_directories(${GMP_INCLUDE_DIR})
-
+#sdl_gui
+set(sdl_gui_include_dir ${CMAKE_SOURCE_DIR}/external/include/sdl_gui)
+include_directories(${sdl_gui_include_dir})
+set(sdl_gui_lib ${CMAKE_SOURCE_DIR}/external/lib/libsdl_gui.a)
 endif (UNIX)
 
+if (WIN32)
+#SDL2
+set(SDL2_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/include/sdl2/)
+include_directories(${SDL2_INCLUDE_DIR})
+set(SDL2_LIBRARY ${CMAKE_SOURCE_DIR}/external/lib/sdl2.lib ${CMAKE_SOURCE_DIR}/external/lib/sdl2main.lib)
+#SDL2 image
+set(SDL2_IMAGE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/include/sdl2/)
+include_directories(${SDL2_IMAGE_INCLUDE_DIR})
+set(SDL2_IMAGE_LIBRARY ${CMAKE_SOURCE_DIR}/external/lib/sdl2_image.lib)
+#SDL2 ttf
+set(SDL2_TTF_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/include/sdl2/)
+include_directories(${SDL2_TTF_INCLUDE_DIR})
+set(SDL2_TTF_LIBRARY ${CMAKE_SOURCE_DIR}/external/lib/sdl2_ttf.lib)
 
-set(sdl_gui_include_dir ${CMAKE_SOURCE_DIR}/sdl_gui/include)
+set(GMP_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/include/mpir/)
+include_directories(${GMP_INCLUDE_DIR})
+set(GMP_LIBRARIES ${CMAKE_SOURCE_DIR}/external/lib/mpir.lib)
+
+#sdl_gui
+set(sdl_gui_include_dir ${CMAKE_SOURCE_DIR}/external/include/sdl_gui/)
 include_directories(${sdl_gui_include_dir})
-set(sdl_gui_lib ${CMAKE_SOURCE_DIR}/sdl_gui/lib/libsdl_gui.a)
+set(sdl_gui_lib ${CMAKE_SOURCE_DIR}/external/lib/sdl_gui.lib)
+endif(WIN32)
+
+#define exe folder
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin )
 
 add_executable(${app_name} ${SOURCE_FILES} ${HEADER_FILES})
 
-set_target_properties(${app_name} PROPERTIES LINK_FLAGS "-Wl,-rpath,./data/lib")#add local folder as relative path
+# set_target_properties(${app_name} PROPERTIES LINK_FLAGS "-Wl,-rpath,./data/lib")#add local folder as relative path
 
 target_link_libraries(${app_name} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${SDL2_TTF_LIBRARY} ${GMP_LIBRARIES} ${sdl_gui_lib})
 
@@ -61,3 +93,25 @@ target_link_libraries(${app_name} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${SDL2_T
 add_custom_command(TARGET ${app_name} POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                    ${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:${app_name}>/data)
+
+if (WIN32)
+set(DLLS
+    libfreetype-6.dll
+    libjpeg-9.dll
+    libpng16-16.dll
+    libtiff-5.dll
+    libwebp-7.dll
+    mpir.dll
+    SDL2.dll
+    SDL2_image.dll
+    SDL2_ttf.dll
+    zlib1.dll
+)
+
+foreach(dll ${DLLS})
+   add_custom_command(TARGET ${app_name} POST_BUILD
+                  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                  "${CMAKE_SOURCE_DIR}/external/dll/${dll}"
+                  $<TARGET_FILE_DIR:${app_name}>)
+endforeach(dll)
+endif (WIN32)

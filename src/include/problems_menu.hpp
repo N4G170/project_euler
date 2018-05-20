@@ -42,6 +42,7 @@ class ProblemsMenu : public StateInterface
         /**
          * \brief Stores the futures of running problems
          */
+        //problem number, is running, future result
         std::map< int, std::pair<bool, std::future<std::string>> > m_problems_future;
 
         sdl_gui::Label* m_input_label;

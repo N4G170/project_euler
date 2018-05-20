@@ -1,12 +1,8 @@
 # Project Euler project
 
-I uploaded the code to github for convenience, but if anyone finds it useful, even as a bad example, good.
+This is my oldest project (it suffered many facelifts), it has the implementation of algorithms used to solve some of the mathematical problems from the [Project Euler website](https://projecteuler.net/).
 
-NOTE:github is marking the project as C, but it is C++ only.
-
-This project is one of my oldest ones, it has the implementation of algorithms used to solve some of the mathematical problems from the [Project Euler website](https://projecteuler.net/).
-
-WARNING: If you want to solve them yourself do not read my solutions, study the maths and try.
+WARNING: If you want to solve them yourself do not read my solutions, study the maths and try it.
 
 It started as a simple console application with a simple text base ui, then I made a rudimentary gui with SDL2, and right now it uses my [sdl_gui](https://github.com/N4G170/sdl_gui), it looks bad, really bad, my ui design skills are not very good, but it works.
 
@@ -28,17 +24,13 @@ The other non-working problems, 3, 36 and 94, all suffered from the same problem
 
 So it upsets me a little, that even simple code with no external dependencies give different result depending on the platform. I now have a lot more respect for porting companies.
 
-Another change was made, as a test, on this project. The [sdl_gui](https://github.com/N4G170/sdl_gui) used for the UI, now comes as a static lib on both Linux and windows. And after checking the size of the lib file on windows, I decided not to use it in any other project(as a static lib).
-
 Another change was the reintroduction of the use of the keyboard to request problems. Number keys 1-0 can be used to insert, well, numbers and a problem can be requested using the RETURN or ENTER keys. BACKSPACE and DELETE act the same as the clear button.
 
 ## Running the program
-If you are using one of the release builds, double click the .exe on windows or run in a terminal on Linux.
-The provided build represents a demo showcasing the elements present on the project. Use the button on the top to change panels and try the elements.
+You can download the latest release from the release tab ([link](https://github.com/N4G170/project_euler/releases)) or you can build it yourself.
+The windows release has the needed dlls. On Linux make sure to install the dependencies SDL2, SDL2_image, SDL2_ttf and gmp.
 
 ## Building the program
-
-If you are building this project I recommend using a Linux distro, as it is so easier and all problems run. I removed previous boost dependency.
 
 ### If on Linux
 
@@ -57,21 +49,16 @@ After that, open terminal window at the base of the project (the folder with thi
 - cmake ..
 - make -j
 ```
-If no errors appear, the build is complete and you can run the program with the command ./euler
-I did not configure any install instructions, so if you want to move the build, copy the folder 'data' and the file 'euler' from the build folder.
-As stated before, the Linux build now uses a static version of the gui lib, so no more .so files to go around.
-
+If no errors appear, the build is complete inside the "bin" folder and you can run the program with the command ./euler in your terminal (you can only run it from the terminal).
 NOTE: As cmake creates the executable as a shared object (I have yet to find why), you have to run the program through the terminal, rather than double click
 
 ### On windows
 
-As my SDL2 cmake modules are not working properly on windows, the 'vs' folder contains a Visual Studio solution with the project and all the needed dependencies linked, so it should be a matter of opening the solution on a VS 15+ and build it.
+Note: On windows I only tested using Visual Studio 2017 (you can use whatever you want as long as it supports cpp14).
 
-NOTE: the project only builds when targeting x64.
-
-To run the program, you need the data folder next to the .exe as well as all of [SDL2](https://www.libsdl.org/), [SDL2_image](https://www.libsdl.org/projects/SDL_image/), [SDL2_ttf](https://www.libsdl.org/projects/SDL_ttf/) dlls (you can find them in my release or download them from the linked SDL website).
-
-As stated before, the current version uses sdl_gui as a static lib, and that is the reason the project is bigger.
+On windows you need to download [cmake](https://cmake.org/) and use it to create a "vs 15 2017 64bit" solution (needs to be 64bit).
+To use cmake, create a "build" folder and set it as build folder. Set the root of the project as the source folder and run it. Inside the build folder will be a vs solution.
+Open the solution, set it to release (64bit) and build it. The final build and all needed dlls and the data folder will be inside the "bin/release" folder.
 
 ## TODO
 
